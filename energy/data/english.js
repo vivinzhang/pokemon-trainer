@@ -1,0 +1,30 @@
+const vocabulary=`apple|苹果,orange|橙子,banana|香蕉,pear|梨,grape|葡萄,watermelon|西瓜,peach|桃子,strawberry|草莓,lemon|柠檬,mango|芒果,cat|猫,dog|狗,bird|鸟,fish|鱼,rabbit|兔子,tiger|老虎,lion|狮子,elephant|大象,monkey|猴子,panda|熊猫,bear|熊,duck|鸭子,chicken|鸡,horse|马,sheep|绵羊,cow|奶牛,pig|猪,frog|青蛙,mouse|老鼠,zebra|斑马,red|红色,blue|蓝色,green|绿色,yellow|黄色,black|黑色,white|白色,pink|粉红色,purple|紫色,brown|棕色,gray|灰色,book|书,pen|钢笔,pencil|铅笔,ruler|尺子,eraser|橡皮,bag|包,desk|书桌,chair|椅子,school|学校,teacher|老师,student|学生,classroom|教室,door|门,window|窗户,computer|电脑,hand|手,foot|脚,head|头,eye|眼睛,ear|耳朵,nose|鼻子,mouth|嘴巴,face|脸,arm|手臂,leg|腿,father|爸爸,mother|妈妈,brother|兄弟,sister|姐妹,grandfather|祖父,grandmother|祖母,family|家庭,friend|朋友,baby|婴儿,boy|男孩,girl|女孩,sun|太阳,moon|月亮,star|星星,sky|天空,rain|雨,snow|雪,tree|树,flower|花,grass|草,river|河流,mountain|山,sea|海洋,water|水,milk|牛奶,bread|面包,rice|米饭,egg|鸡蛋,cake|蛋糕,noodles|面条,juice|果汁,tea|茶,soup|汤,car|汽车,bus|公共汽车,bike|自行车,train|火车,plane|飞机,boat|小船,ball|球,kite|风筝,toy|玩具,bed|床,house|房子,clock|钟表,hat|帽子,shoe|鞋子,shirt|衬衫,coat|外套,dress|连衣裙,skirt|短裙,one|一,two|二,three|三,four|四,five|五,six|六,seven|七,eight|八,nine|九,ten|十,happy|开心的,sad|难过的,big|大的,small|小的,hot|热的,cold|冷的,new|新的,old|旧的,long|长的,short|短的` .split(',').map(x=>x.split('|'));
+const dialogues=[
+['早上见到老师','Good morning.','Good night.','Goodbye.','I am sorry.','早上问好用 Good morning.'],
+['晚上睡觉前向家人道晚安','Good night.','Good morning.','Hello.','How old are you?','睡前道晚安用 Good night.'],
+['别人帮你捡起铅笔，你表示感谢','Thank you.','I am sorry.','Goodbye.','I am hungry.','表达感谢用 Thank you.'],
+['别人向你说“Thank you.”，你回应','You are welcome.','I am sorry.','Good night.','I am ten.','回应感谢用 You are welcome.'],
+['不小心碰到同学，你道歉','I am sorry.','Well done!','Good morning.','Here you are.','道歉用 I am sorry.'],
+['朋友要离开了，你告别','Goodbye.','Good morning.','Thank you.','I like apples.','告别用 Goodbye.'],
+['第一次见到新同学，你说很高兴认识他','Nice to meet you.','See you tomorrow.','Good night.','I am hungry.','初次见面可以说 Nice to meet you.'],
+['问对方叫什么名字','What is your name?','How old are you?','What color is it?','Where is my bag?','询问姓名用 What is your name?'],
+['问对方几岁','How old are you?','What is your name?','How are you?','What is this?','询问年龄用 How old are you?'],
+['问朋友身体怎么样','How are you?','How old are you?','What is your name?','Where is the book?','问候近况用 How are you?'],
+['朋友问你“How are you?”，你说自己很好','I am fine, thank you.','I am eight.','It is blue.','This is a pen.','I am fine 表示我很好。'],
+['请求别人给你一杯水','Can I have some water, please?','I am a teacher.','This is a cat.','Good night.','礼貌请求可用 Can I have ... please?'],
+['把物品递给别人','Here you are.','Where are you?','How old are you?','I am sorry.','递东西时用 Here you are.'],
+['邀请朋友一起玩','Let us play together.','Go to bed.','Open your book.','Good night.','一起玩可以说 Let us play together.'],
+['老师让大家打开书','Open your books, please.','Close the door, please.','Goodbye.','I like milk.','打开书用 Open your books.'],
+['请朋友关门','Close the door, please.','Open your book.','Sit down, please.','I am happy.','关门用 Close the door.'],
+['请同学坐下','Sit down, please.','Stand up, please.','Run fast.','Good night.','坐下用 Sit down.'],
+['请同学起立','Stand up, please.','Sit down, please.','Close your eyes.','I like red.','起立用 Stand up.'],
+['你饿了，告诉家人','I am hungry.','I am thirsty.','It is sunny.','I am fine.','hungry 表示饥饿的。'],
+['你渴了，告诉家人','I am thirsty.','I am hungry.','It is a dog.','I am a student.','thirsty 表示口渴的。'],
+['想知道物品颜色','What color is it?','How old are you?','What is your name?','How are you?','询问颜色用 What color is it?'],
+['想知道远处那是什么','What is that?','Who are you?','How old are you?','How are you?','询问较远的物品用 What is that?'],
+['向同学介绍自己的妈妈','This is my mother.','I am a mother.','He is my father.','It is my pen.','介绍某人用 This is ...'],
+['朋友说“Happy birthday!”，你回应','Thank you.','I am sorry.','Good night.','Goodbye.','收到生日祝福时表示感谢。'],
+['夸奖朋友做得好','Well done!','I am sorry.','I am thirsty.','Good night.','Well done 表示做得好。'],
+['想知道书在哪里','Where is the book?','What color is the book?','How old are you?','What is your name?','询问地点用 Where is ...?']];
+export const ENGLISH=[...vocabulary.map(([en,zh],i)=>({id:'E-v-'+i,key:'en:word:'+en,title:zh+' / '+en,subject:'english',kind:'vocab',stem:`“${zh}”的英文是？`,options:[en,...[1,3,7].map(n=>vocabulary[(i+n)%vocabulary.length][0])],answer:0,analysis:`${en} 的意思是“${zh}”。`})),...dialogues.flatMap((row,i)=>['课间交流：','日常对话：','情景练习：','校园与生活：'].map((prefix,j)=>({id:`E-d-${i}-${j}`,key:'en:dialogue:'+i,title:row[0],subject:'english',kind:'dialogue',stem:prefix+row[0]+'，应该说什么？',options:row.slice(1,5),answer:0,analysis:row[5]})))];
+// Four contexts share one knowledge key; repeated wording never counts as four mastered skills.

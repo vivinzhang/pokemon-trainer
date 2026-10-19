@@ -1,0 +1,10 @@
+export const KEY='pokemon-energy-island-v1';
+export function defaults(){return {version:1,created:Date.now(),updated:Date.now(),selected:25,started:false,partners:{},unlocked:[],bossSeen:[],settings:{grade:2,mode:'normal',untimed:false,sound:true,music:false,reduced:false,subjects:['math','chinese','english'],math:['multiply','add','sub'],carry:true,ten:false,poems:[],idioms:[],english:['vocab','dialogue'],words:true},knowledge:{},mistakes:{},history:[],daily:{},run:null,training:null}}
+export function validSave(d){return !!(d&&d.version===1&&Number.isFinite(d.created)&&d.partners&&d.settings&&Array.isArray(d.unlocked)&&d.knowledge&&d.mistakes&&Array.isArray(d.history)&&d.daily&&(!d.run||(Number.isInteger(d.run.stage)&&d.run.stage>=0&&d.run.stage<6&&d.run.partner&&Array.isArray(d.run.bosses)&&d.run.boost&&d.run.claimed)))}
+export function load(storage=globalThis.localStorage){let raw;try{raw=storage.getItem(KEY);if(raw){const d=JSON.parse(raw);if(validSave(d))return {data:d,recovered:false}}}catch{}try{const d=JSON.parse(storage.getItem(KEY+'-backup'));if(validSave(d))return {data:d,recovered:true}}catch{}return {data:defaults(),recovered:false,corrupt:!!raw}}
+export function persist(data,storage=globalThis.localStorage){data.updated=Date.now();const encoded=JSON.stringify(data);const old=storage.getItem(KEY);if(old){try{if(validSave(JSON.parse(old)))storage.setItem(KEY+'-backup',old)}catch{}}storage.setItem(KEY,encoded)}
+export function recordFor(data,id){return data.partners[id]||(data.partners[id]={xp:0,mega:null,firstWin:false})}
+export function localDay(now=Date.now()){const d=new Date(now);return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`}
+export function dayLedger(data,now=Date.now()){const key=localDay(now);return data.daily[key]||(data.daily[key]={rewards:{},reviewed:[],task:false})}
+export function addXP(data,id,n){const r=recordFor(data,id);const before=r.xp;r.xp+=n;return [25,70,220].filter(t=>before<t&&r.xp>=t)}
+export function claim(data,run,key,n){if(run.claimed[key])return [];run.claimed[key]=true;return addXP(data,run.partner,n)}
