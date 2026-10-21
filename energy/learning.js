@@ -19,7 +19,7 @@ export function chooseQuestion(data,bank,settings,run,now=Date.now()){
  const kinds=[...new Set(eligible.map(q=>q.kind))];const kind=kinds[Math.floor(Math.random()*kinds.length)];eligible=eligible.filter(q=>q.kind===kind);if(!eligible.length)return null;
  const q=shuffleQuestion(eligible[Math.floor(Math.random()*eligible.length)]);return q;
 }
-export function filteredBank(bank,s){return bank.filter(q=>s.subjects.includes(q.subject)&&(q.subject==='english'?s.english.includes(q.kind):q.kind==='idiom'?s.idioms.includes(q.id):q.poem?s.poems.includes(q.poem):s.words))}
+export function filteredBank(bank,s){return s.allBank?[...bank]:bank.filter(q=>s.subjects.includes(q.subject)&&(q.subject==='english'?s.english.includes(q.kind):q.kind==='idiom'?s.idioms.includes(q.id):q.poem?s.poems.includes(q.poem):s.words))}
 export function answerText(q,answer){if(answer==null)return '未作答';return Array.isArray(answer)?answer.map(i=>q.options[i]).join(' / '):q.options[answer]}
 export function isCorrect(q,answer){return JSON.stringify(q.answer)===JSON.stringify(answer)}
 export function applyAnswer(data,q,answer,owner,seq=0,now=Date.now()){

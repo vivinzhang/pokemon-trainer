@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
 import {defaults,addXP,claim,recordFor,persist,load,KEY} from '../storage.js';
 import {mathQuestion,normalizeQuestion,shuffleQuestion,isCorrect,applyAnswer,timerFor,DAY,chooseQuestion,filteredBank} from '../learning.js';
-import {stats,PARTNERS,appearance} from '../data.js';import {ENGLISH} from '../data/english.js';import {WORDS} from '../data/words.js';import {Engine,makeScene} from '../game.js';
+import {stats,PARTNERS,appearance,formName} from '../data.js';import {ENGLISH} from '../data/english.js';import {WORDS} from '../data/words.js';import {Engine,makeScene} from '../game.js';
 const settings=()=>({...defaults().settings,subjects:['math'],math:['multiply','add','sub']});
 const q={id:'q1',key:'k1',title:'测试',subject:'math',kind:'multiply',stem:'2×3=?',options:['6','5','7','8'],answer:0,analysis:'2×3=6'};
 test('数学范围、唯一选项及正确映射（3000题）',()=>{for(let i=0;i<3000;i++){const x=mathQuestion(settings());assert.equal(new Set(x.options).size,4);assert.ok(x.options.every(n=>Number(n)>=0&&Number(n)<=100));assert.equal(Number(x.options[x.answer]),x.correct)}});
@@ -19,3 +19,6 @@ test('探索目标、装置消耗、出口只结算一次',()=>{const e=Object.c
 test('即时看答案后重复正确不跳过延迟重测',()=>{const d=defaults(),now=Date.now();applyAnswer(d,q,1,25,1,now);applyAnswer(d,q,0,25,2,now+100);assert.equal(d.knowledge.k1.state,'weak');assert.equal(d.knowledge.k1.due,null)});
 test('全古诗提供全文且选项诗句与全文一致',()=>{const rows=JSON.parse(fs.readFileSync(new URL('../data/poems.json',import.meta.url))).questions;for(const q of rows){assert.ok(q.full_text?.length,q.id);if(q.type.includes('排序')){const full=q.full_text.join('').replace(/[，。？！、]/g,'');for(const option of q.options)assert.ok(full.includes(option.replace(/[，。？！、]/g,'')),q.id+':'+option)}}});
 test('已知成语错字更正并全部包含释义',()=>{const rows=JSON.parse(fs.readFileSync(new URL('../data/idioms.json',import.meta.url))).questions;for(const q of rows)assert.ok(q.definition,q.id);for(const word of ['山清水秀','色若死灰','震撼人心','合浦还珠'])assert.ok(rows.some(q=>q.idiom===word))});
+
+test('full bank ignores legacy scope filters',()=>{const bank=[...ENGLISH,...WORDS,...JSON.parse(fs.readFileSync(new URL('../data/idioms.json',import.meta.url))).questions.map(q=>normalizeQuestion(q,'idiom'))];assert.equal(filteredBank(bank,{allBank:true,subjects:[],poems:[],idioms:[]}).length,bank.length)});
+test('evolution name and artwork change together',()=>{const p=PARTNERS.find(p=>p.id===4);for(const [xp,id,index] of [[0,4,0],[25,5,1],[70,6,2]]){assert.equal(appearance(p,{xp}),id);assert.equal(formName(p,{xp}),p.forms[index])}assert.equal(appearance(p,{xp:220,mega:10035}),10035);assert.ok(formName(p,{xp:220,mega:10035}).endsWith(' Y'))});
