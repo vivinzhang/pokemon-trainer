@@ -26,7 +26,8 @@ export class Engine{
  interact(){if(this.paused||this.s.done)return;const m=this.markers().find(m=>distance(m,this.s)<100);if(!m)return;const kind=STAGES[this.run.stage].kind;if(kind==='device'){if(this.s.devices.includes(m.id))return;if(this.s.energy<3){this.float('还需要3点能量',m.x,m.y-60,'#ffe08b');return}this.s.energy-=3;this.s.devices.push(m.id);this.burst(m.x,m.y-50,'#9af5da',40,150);this.events('sound','skill');this.events('save')}else if(!this.s.supplies.includes(m.id)){this.events('supply',m.id)}}
  spawnBlock(){if(this.s.blocks.length>=8)return;let x,y;for(let n=0;n<40;n++){x=random(220,1060);y=random(200,570);if(distance({x,y},this.s)>60&&(!this.s.boss||distance({x,y},this.s.boss)>130)&&!this.markers().some(m=>distance(m,{x,y})<80)&&!this.hazards().some(h=>distance(h,{x,y})<65))break}const same=this.s.streak>=2||Math.random()<.7;const others=Object.keys(TYPES).filter(t=>t!==this.p.type);const type=same?this.p.type:others[Math.floor(Math.random()*3)];this.s.streak=same?0:this.s.streak+1;this.s.blocks.push({x,y,type,seed:Math.random()*6})}
  hazards(){return [2,4].includes(this.run.stage)?[{x:410,y:450},{x:730,y:270},{x:1010,y:490}]:[]}
- update(dt){const s=this.s;s.t+=dt;s.cooldown=Math.max(0,s.cooldown-dt);s.invincible=Math.max(0,s.invincible-dt);
+ checkpointQuiz(){const s=this.s,kind=STAGES[this.run.stage].kind;const point=kind==='collect'?Math.floor(s.collected/3):kind==='device'?s.devices.length:kind==='supply'?s.supplies.length:s.boss&&s.boss.hp<=s.boss.max/2?1:0;if(point<=(s.quizCheckpoint||0)||s.done)return false;s.quizCheckpoint=point;if(s.boss){s.bullets=[];s.warnings=[];s.boss.t=0}s.quizReason=kind==='collect'?'收集里程碑 · 为伙伴充能':kind==='device'?'装置已激活 · 补充能量':kind==='supply'?'补给营地 · 知识充能':'首领半血 · 蓄力反击';this.paused=true;this.events('quiz');return true}
+ update(dt){const s=this.s;if(this.checkpointQuiz())return;s.t+=dt;s.cooldown=Math.max(0,s.cooldown-dt);s.invincible=Math.max(0,s.invincible-dt);
   let dx=this.joy.x,dy=this.joy.y;if(this.keys.has('arrowleft')||this.keys.has('a'))dx-=1;if(this.keys.has('arrowright')||this.keys.has('d'))dx+=1;if(this.keys.has('arrowup')||this.keys.has('w'))dy-=1;if(this.keys.has('arrowdown')||this.keys.has('s'))dy+=1;
   if((dx||dy))this.target=null;else if(this.target){const dd=distance(s,this.target);if(dd<10)this.target=null;else{dx=(this.target.x-s.x)/dd;dy=(this.target.y-s.y)/dd}}
   const length=Math.hypot(dx,dy);if(length>1){dx/=length;dy/=length}s.x=clamp(s.x+dx*230*dt,90,1120);s.y=clamp(s.y+dy*230*dt,160,590);s.moving=length>.05;
@@ -41,7 +42,7 @@ export class Engine{
    if(!s.done)for(let i=s.bullets.length-1;i>=0;i--){const p=s.bullets[i];p.x+=p.vx*dt;p.y+=p.vy*dt;if(distance({x:p.x,y:p.y}, {x:s.x,y:s.y-25})<22){s.bullets.splice(i,1);this.damage()}else if(p.x<0||p.x>1200||p.y<90||p.y>660)s.bullets.splice(i,1)}
   }
   if(this.paused||s.done)return;
-  s.quizClock+=dt;if(s.quizClock>=30&&(!s.warnings.length||s.quizClock>=33)){s.quizClock=0;this.events('quiz');if(this.paused)return}
+  if(this.checkpointQuiz())return;
   if(!s.boss&&this.ready()&&s.x>1070&&Math.abs(s.y-370)<95){s.done=true;this.paused=true;this.events('stageWin')}
   if(Math.floor(s.t/5)!==Math.floor((s.t-dt)/5))this.events('save');
  }
