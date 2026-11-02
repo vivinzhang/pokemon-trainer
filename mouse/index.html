@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#26735b"><title>宝可梦鼠标训练营</title><link rel="icon" href="assets/pikachu.png"><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="app">
+<header class="topbar"><div class="brand"><span class="pokeball" aria-hidden="true"></span><div><strong>宝可梦鼠标训练营</strong><small>小小训练家，大大进步！</small></div></div><div class="tools"><button id="records" class="quiet">☆ 我的徽章</button><button id="sound" class="quiet" aria-pressed="false">♫ 声音：关</button><button id="help" class="quiet" aria-label="查看玩法">？</button></div></header>
+<nav class="modes" aria-label="选择训练"><button class="mode" data-mode="find" aria-pressed="false"><span>01</span><div>寻找宝可梦<small>练习点得准</small></div><b>↗</b></button><button class="mode active" data-mode="energy" aria-pressed="true"><span>02</span><div>送出数字能量<small>先选格，再填数</small></div><b>ϟ</b></button><button class="mode" data-mode="challenge" aria-pressed="false"><span>03</span><div>训练家挑战<small>两分钟，试试身手</small></div><b>⚑</b></button></nav>
+<main>
+<section class="board-panel" aria-label="数独操作训练">
+<div class="board-heading"><div><span class="eyebrow">MOUSE TRAINING · 练习场</span><h1 id="mode-title">把数字能量送给皮卡丘</h1></div><span class="tag">9 × 9</span></div>
+<div class="board-wrap"><div class="column-labels" aria-hidden="true"></div><div class="row-labels" aria-hidden="true"></div><div id="board" class="board" role="group" aria-label="九宫格练习棋盘"></div></div>
+<div class="board-bottom"><span><i class="legend target-legend"></i> 目标格</span><span><i class="legend selected-legend"></i> 已选中</span><span class="keyboard-hint">单击选格 · 鼠标 / 键盘填数</span></div>
+<div class="progress-row"><span id="progress-label">准备出发</span><div class="progress-track"><div id="progress"></div></div><span id="progress-count">0 / 12</span></div>
+<div class="stats"><div><small>正确完成</small><strong id="correct">0<em> 题</em></strong></div><div><small>点错次数</small><strong id="mistakes">0<em> 次</em></strong></div><div><small>练习时间</small><strong id="timer">00:00</strong></div></div>
+</section>
+<aside class="side">
+<section class="companion"><div class="companion-copy"><span class="eyebrow">YOUR PARTNER · 你的伙伴</span><h2>皮卡丘为你加油！</h2><p id="cheer">慢慢来，先点准，<br>再一点点变快。</p><span class="partner-label">⚡ PIKACHU</span></div><img class="hero-pokemon" src="assets/pikachu.png" alt="官方形象皮卡丘"><span class="spark s1">✦</span><span class="spark s2">✧</span></section>
+<section class="mission"><div class="mission-top"><span class="tag">当前任务</span><span id="step">准备好了就出发</span></div><p id="instruction" aria-live="polite">点「开始练习」，和皮卡丘一起收集数字能量！</p><div id="feedback" role="status">每次只需两步：选格子 → 点数字</div></section>
+<section class="number-panel"><div class="number-heading"><h2>数字能量站</h2><label><input id="mouse-only" type="checkbox" checked> 只练鼠标</label></div><div id="keypad" class="keypad" aria-label="数字按钮"></div><div class="session-controls"><button id="start" class="primary">开始练习 <span>▶</span></button><button id="pause" class="secondary" disabled>暂停</button></div></section>
+</aside>
+</main>
+<footer><span>✦ 每天练习几分钟，让小手更灵活</span><small>个人学习练习 · 非宝可梦官方游戏 · 图片版权归原权利人所有</small></footer>
+</div>
+<dialog id="dialog"><button id="close-dialog" class="close" aria-label="关闭">×</button><div id="dialog-content"></div><button id="dialog-action" class="primary">知道了</button></dialog>
+<script src="core.js"></script><script src="game.js"></script>
+</body></html>
