@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#26735b"><title>宝可梦鼠标训练营</title><link rel="icon" href="assets/pikachu.png"><link rel="stylesheet" href="style.css?v=7"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#26735b"><title>宝可梦鼠标训练营</title><link rel="icon" href="assets/pikachu.png"><link rel="stylesheet" href="style.css?v=8"></head>
 <body>
 <div class="app">
-<header class="topbar"><div class="brand"><span class="pokeball" aria-hidden="true"></span><div><strong>宝可梦鼠标训练营</strong><small>小小训练家，大大进步！</small></div></div><div class="tools"><button id="records" class="quiet">☆ 我的徽章</button><button id="sound" class="quiet" aria-pressed="false">♫ 声音：关</button><button id="help" class="quiet" aria-label="查看玩法">？</button></div></header>
+<header class="topbar"><div class="brand"><span class="pokeball" aria-hidden="true"></span><div><strong>宝可梦鼠标训练营</strong><small>小小训练家，大大进步！</small></div></div><div class="tools"><button id="records" class="quiet">☆ 我的徽章</button><button id="music" class="quiet" aria-pressed="true">♫ 音乐：开</button><button id="sound" class="quiet" aria-pressed="true">♪ 音效：开</button><button id="help" class="quiet" aria-label="查看玩法">？</button></div></header>
 <nav class="modes" aria-label="选择训练"><button class="mode" data-mode="find" aria-pressed="false"><span>01</span><div>寻找宝可梦<small>练习点得准</small></div><b>↗</b></button><button class="mode active" data-mode="energy" aria-pressed="true"><span>02</span><div>送出数字能量<small>先选格，再填数</small></div><b>ϟ</b></button><button class="mode" data-mode="challenge" aria-pressed="false"><span>03</span><div>训练家挑战<small>两分钟，试试身手</small></div><b>⚑</b></button><button class="mode" data-mode="whack" aria-pressed="false"><span>04</span><div>宝可梦打地鼠<small>快速瞄准，升级挑战</small></div><b>✦</b></button></nav>
 <main>
 <section class="board-panel" aria-label="数独操作训练">
 <div class="board-heading"><div><span class="eyebrow">MOUSE TRAINING · 练习场</span><h1 id="mode-title">把数字能量送给皮卡丘</h1></div><span id="board-tag" class="tag">6 × 6</span></div>
 <div class="board-types" role="group" aria-label="选择六宫格类型"><button class="board-type active" data-kind="standard" aria-pressed="true">标准六宫</button><button class="board-type" data-kind="irregular" aria-pressed="false">不规则六宫</button><span id="region-note">每宫 2 行 × 3 列</span></div>
 <div class="board-wrap"><div class="column-labels" aria-hidden="true"></div><div class="row-labels" aria-hidden="true"></div><div id="board" class="board" role="group" aria-label="六宫格练习棋盘"></div></div>
-<div id="whack-area" hidden><div class="whack-hud"><span>等级 <strong id="whack-level">1</strong> / 8</span><span>命中 <strong id="whack-hits">0</strong> 次</span><span>溜走 <strong id="whack-missed">0</strong> 只</span></div><div id="whack-field" class="whack-field" role="group" aria-label="宝可梦出没的九个洞口"></div></div>
+<div id="whack-area" hidden><div class="whack-types" role="group" aria-label="选择打地鼠难度"><button class="whack-type active" data-variant="normal" aria-pressed="true">普通 · 3 × 3</button><button class="whack-type" data-variant="hard" aria-pressed="false">困难 · 4 × 3</button><span id="whack-rule">瞄准宝可梦，单击得分</span></div><div class="whack-hud"><span>等级 <strong id="whack-level">1</strong> / 8</span><span>命中 <strong id="whack-hits">0</strong> 次</span><span>溜走 <strong id="whack-missed">0</strong> 只</span><span id="bomb-count-wrap" hidden>炸弹 <strong id="whack-bombs">0</strong> 次</span></div><div id="whack-map" class="whack-map"><div id="whack-field" class="whack-field" role="group" aria-label="宝可梦出没的九个洞口"></div><div id="smoke-overlay" class="smoke-overlay" hidden><span class="blast" aria-hidden="true">✹</span><div class="smoke-countdown" role="status" aria-live="polite"><strong id="smoke-count">3</strong><span>烟雾散去后继续</span><small>炸弹 −20 分 · 正在恢复视野</small></div></div></div></div>
 <div class="board-bottom"><span><i class="legend target-legend"></i> 目标格</span><span><i class="legend selected-legend"></i> 已选中</span><span class="keyboard-hint">单击选格 · 鼠标 / 键盘填数</span></div>
 <div class="progress-row"><span id="progress-label">准备出发</span><div class="progress-track"><div id="progress"></div></div><span id="progress-count">0 / 12</span></div>
 <div class="stats"><div><small>正确完成</small><strong id="correct">0<em> 题</em></strong></div><div><small>点错次数</small><strong id="mistakes">0<em> 次</em></strong></div><div><small>练习时间</small><strong id="timer">00:00</strong></div></div>
@@ -24,5 +24,5 @@
 <footer><span>✦ 每天练习几分钟，让小手更灵活</span><small>个人学习练习 · 非宝可梦官方游戏 · 图片版权归原权利人所有</small></footer>
 </div>
 <dialog id="dialog"><button id="close-dialog" class="close" aria-label="关闭">×</button><div id="dialog-content"></div><button id="dialog-action" class="primary">知道了</button></dialog>
-<script src="core.js?v=7"></script><script src="whack.js?v=7"></script><script src="game.js?v=7"></script>
+<script src="core.js?v=8"></script><script src="whack.js?v=8"></script><script src="audio.js?v=8"></script><script src="game.js?v=8"></script>
 </body></html>
